@@ -1,0 +1,78 @@
+{
+  "name": "@qna-session/qna_session",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "name": "qna_session",
+    "targets": {
+      "build": {
+        "executor": "@nx/esbuild:esbuild",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "defaultConfiguration": "production",
+        "options": {
+          "platform": "node",
+          "outputPath": "apps/qna_session/dist",
+          "format": [
+            "cjs"
+          ],
+          "bundle": false,
+          "main": "apps/qna_session/src/main.ts",
+          "tsConfig": "apps/qna_session/tsconfig.app.json",
+          "assets": [
+            "apps/qna_session/src/assets"
+          ],
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        },
+        "configurations": {
+          "development": {},
+          "production": {
+            "generateLockfile": true,
+            "esbuildOptions": {
+              "sourcemap": false,
+              "outExtension": {
+                ".js": ".js"
+              }
+            }
+          }
+        }
+      },
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          "build"
+        ],
+        "options": {
+          "buildTarget": "qna_session:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "qna_session:build:development"
+          },
+          "production": {
+            "buildTarget": "qna_session:build:production"
+          }
+        }
+      },
+      "test": {
+        "options": {
+          "passWithNoTests": true
+        }
+      },
+      "docker-build": {
+        "dependsOn": [
+          "build"
+        ],
+        "command": "docker build -f apps/qna_session/Dockerfile . -t qna_session"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/qna_session-e2e"
+    },
+    {
+      "path": "./apps/qna_session"
+    },
+    {
+      "path": "./apps/qna_session_web"
+    }
+  ]
+}
